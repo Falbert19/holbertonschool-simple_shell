@@ -15,6 +15,14 @@ int execute_command(char **args, char **env)
 {
 	pid_t pid;
 	int status;
+	char *command_path;
+
+	command_path = find_in_path(args[0], env);
+	if (!command_path)
+	{
+		fprintf(stderr, "hsh: %s: command not found\n", args[0]);
+		return (1);
+	}
 
 	pid = fork();
 	if (pid == 0)
@@ -22,9 +30,11 @@ int execute_command(char **args, char **env)
 		if (execve(args[0], args, env) == -1)
 		{
 			perror("./hsh");
+			free(command_path);
+			exit(EXIT_FAILURE);
 		}
-		exit(EXIT_FAILURE);
 	}
+
 	else if (pid < 0)
 	{
 		perror("fork");
@@ -34,6 +44,7 @@ int execute_command(char **args, char **env)
 		waitpid(pid, &status, 0);
 	}
 
+	free(command_path);
 	return (1);
 }
 
@@ -47,9 +58,35 @@ int execute_command(char **args, char **env)
 
 char *find_in_path(char *command, char **env)
 {
-	(void)command;
-	(void)env;
+	char *path = NULL, *path_copy, *token, full_path[1024];
+	struct stat st;
+	int i = 0;
 
+	for (i = 0; env[i]; i++)
+	{
+		if (strncmp(env[i], "PATH=", 5) == 0)
+		{
+			path = env[i] + 5;
+			break;
+		}
+	}
+
+	if (!path)
+		return (NULL);
+
+	path_copy = strdup(path);
+	token = strtok(path_copy, ":");
+	while (token != NULL)
+	{
+		snprintf(full_path, sizeof(full_path), "%s/%s", token, command);
+		if (stat(full_path, &st) == 0 && (st.st_mode & S_IXUSR))
+		{
+			free(path_copy);
+			return (strdup(full_path));
+		}
+		token = strtok(NULL, ":");
+	}
+	free(path_copy);
 	return (NULL);
 }
 
