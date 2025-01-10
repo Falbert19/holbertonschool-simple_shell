@@ -8,6 +8,7 @@
  * execute_command - execute external command
  * @args: argument
  * @env: enviorment
+ *
  * Return: a command
  */
 
@@ -62,7 +63,7 @@ char *find_in_path(char *command, char **env)
 	struct stat st;
 	int i = 0;
 
-	for (i = 0; env[i]; i++)
+	while (env[i])
 	{
 		if (strncmp(env[i], "PATH=", 5) == 0)
 		{
@@ -70,11 +71,13 @@ char *find_in_path(char *command, char **env)
 			break;
 		}
 	}
-
 	if (!path)
 		return (NULL);
 
 	path_copy = strdup(path);
+	if (!path_copy)
+		return (NULL);
+
 	token = strtok(path_copy, ":");
 	while (token != NULL)
 	{
@@ -86,6 +89,7 @@ char *find_in_path(char *command, char **env)
 		}
 		token = strtok(NULL, ":");
 	}
+
 	free(path_copy);
 	return (NULL);
 }
