@@ -14,6 +14,8 @@ void shell_loop(char **env);
 
 char *read_command(void);
 
+char *find_in_path(char *command, char **env);
+
 char **parse_command(char *cmd);
 
 int execute_command(char **args, char **env);
