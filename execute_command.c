@@ -17,7 +17,7 @@ int execute_command(char **args, char **env)
 	int status;
 
 	pid = fork();
-	if (pid == 0) /* Child process */
+	if (pid == 0)
 	{
 		if (execve(args[0], args, env) == -1)
 		{
@@ -25,11 +25,11 @@ int execute_command(char **args, char **env)
 		}
 		exit(EXIT_FAILURE);
 	}
-	else if (pid < 0) /* Fork failed */
+	else if (pid < 0)
 	{
 		perror("fork");
 	}
-	else /* Parent process */
+	else
 	{
 		waitpid(pid, &status, 0);
 	}
