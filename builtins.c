@@ -1,11 +1,11 @@
 #include "shell.h"
 
 /**
- * handle_builtins - execute builtins commands
+ * handle_builtins - executes
  * @args: argument
  * @env: enviorment
  *
- * Return: 0
+ * return: exit
  */
 
 int handle_builtins(char **args, char **env)
@@ -27,8 +27,19 @@ int handle_builtins(char **args, char **env)
 
 void builtin_exit(char **args)
 {
-	(void)args;
-	exit(EXIT_SUCCESS);
+	int exit_status = 0;
+
+	if (args[1] != NULL)
+	{
+		exit_status = atoi(args[1]);
+		if (exit_status < 0)
+		{
+		fprintf(stderr, "exit: Invalid exit status\n");
+		return 2;
+		}
+	}
+
+	exit(exit_status);
 }
 
 /**

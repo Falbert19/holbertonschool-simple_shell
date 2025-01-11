@@ -8,6 +8,7 @@
  * execute_command - execute external command
  * @args: argument
  * @env: enviorment
+ *
  * Return: a command
  */
 
@@ -46,47 +47,5 @@ int execute_command(char **args, char **env)
 
 	free(command_path);
 	return (1);
-}
-
-/**
- * find_in_path - search for commands in PATH
- * @env: enviorment
- * @command: command
- *
- * Return: NULL
- */
-
-char *find_in_path(char *command, char **env)
-{
-	char *path = NULL, *path_copy, *token, full_path[1024];
-	struct stat st;
-	int i = 0;
-
-	for (i = 0; env[i]; i++)
-	{
-		if (strncmp(env[i], "PATH=", 5) == 0)
-		{
-			path = env[i] + 5;
-			break;
-		}
-	}
-
-	if (!path)
-		return (NULL);
-
-	path_copy = strdup(path);
-	token = strtok(path_copy, ":");
-	while (token != NULL)
-	{
-		snprintf(full_path, sizeof(full_path), "%s/%s", token, command);
-		if (stat(full_path, &st) == 0 && (st.st_mode & S_IXUSR))
-		{
-			free(path_copy);
-			return (strdup(full_path));
-		}
-		token = strtok(NULL, ":");
-	}
-	free(path_copy);
-	return (NULL);
 }
 
