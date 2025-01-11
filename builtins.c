@@ -11,7 +11,7 @@
 int handle_builtins(char **args, char **env)
 {
 	if (strcmp(args[0], "exit") == 0)
-		builtin_exit(args);
+		return (builtin_exit(args));
 	else if (strcmp(args[0], "env") == 0)
 		return (builtin_env(env));
 
@@ -25,7 +25,7 @@ int handle_builtins(char **args, char **env)
  * Return: exit
  */
 
-void builtin_exit(char **args)
+int builtin_exit(char **args)
 {
 	int exit_status = 0;
 
