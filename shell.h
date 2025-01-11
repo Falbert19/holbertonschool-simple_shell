@@ -22,7 +22,7 @@ int execute_command(char **args, char **env);
 
 int handle_builtins(char **args, char **env);
 
-int builtin_exit(char **args);
+void builtin_exit(char **args);
 
 int builtin_env(char **env);
 
