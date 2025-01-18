@@ -25,8 +25,8 @@ accessible to all processes spawned by it.
 
 ## Contributors and Link to Repository
 
-Francisco L Albert Cotto - Github: [Falbert19](https://github.com/Falbert19)
+Francisco L Albert Cotto - Github: [Falbert19](https://github.com/Falbert19) LinkedIn: [fernando-albert](https://www.linkedin.com/in/fernando-albert?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app)
 
-Willie J Touset Castellar - Github: [neonbloo25](https://github.com/neonbloo25)
+Willie J Touset Castellar - Github: [neonbloo25](https://github.com/neonbloo25) Slack: [WillieJ](https://holberton-school-org.slack.com/team/U07Q5BSPBRA)
 
 [Repository](https://github.com/Falbert19/holbertonschool-simple_shell)
